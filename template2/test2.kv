@@ -1,0 +1,29 @@
+#:kivy 1.0
+
+<Label>:
+    color: 1,0,1,1
+    font_size: 50
+
+<Button>:
+    font_size: 40
+	size: 170,75
+	color: 0,1,0,1
+
+<Widgets>:
+    canvas.before:
+        Color:
+            rgba: 1, 1, 1, 1
+        Rectangle:
+            pos: self.pos
+            size: self.size
+    Button:
+        pos: 170,0
+        text: "Listen"
+        on_press: root.Label_Change(root.sayHi())
+
+    Label:
+        font_name: "C:\Windows\Fonts\\Tahoma.TTF"
+        id: lbl
+        pos: root.x, root.top - 300
+        size: self.texture_size
+        text: "test"

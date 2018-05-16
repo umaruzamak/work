@@ -1,0 +1,30 @@
+#:kivy 1.0
+
+Button:
+    text: 'Receive Mode'
+    text_size: root.width, None
+    size: self.texture_size
+    width: 500
+
+<Widgets>:
+	Label:
+		id: lbl
+		font_name: "C:\Windows\Fonts\\Tahoma.TTF"
+		pos: 500,500
+
+	Button:
+		size: 200,75
+		pos: 0,0
+		text: "Noonlin"
+		color: 0,1,0,1
+		font_size: 40
+
+	Button:
+		font_name: "C:\Windows\Fonts\\Tahoma.TTF"
+		size: 170,75
+		pos: 200,0
+		text: "Press me bro"
+		color: 1,0,0,1
+		font_size: 40	
+        on_press: root.Label_Change(root.getText())
+		
