@@ -46,24 +46,36 @@ class CustomDropDrown(BoxLayout):
 class MyW(Widget):
     isShownMenu = True
     text = 'yay moo cow foo bar moo baa ' * 100
-    def Label_Change(self, speechtext):
+    def Label_Change(self, speechtext,speechLang):
         if speechtext != "":
             # with open("speakThis.txt", "w") as text_file:
             #     print(speechtext, file=text_file)
-            file = codecs.open("speakThis.txt", "w", "utf-8")
-            file.write(speechtext)
-            file.close()
-            print(speechtext)
-            #t1.text = speechtext
-            lblSpeak.text = speechtext
+            try:
+                file = codecs.open("speakThis.txt", "w", "utf-8")
+                try:
+                    file.write(speechtext)
+                except:
+                    file.close()
+                file.close()
+                print(speechtext)
+                #t1.text = speechtext
+                lblSpeak.text = speechtext
+            finally:
+                pass
+            
         
-        if t1.text != "":
-            result = nt.translateForMe("th", "en", t1.text)
-            tts = gTTS(result, lang='en', slow=False)
+        if speechtext != "":
+            if speechLang == "th":
+                result = nt.translateForMe("th", "en", speechtext)
+                tts = gTTS(result, lang='en', slow=False)
+            if speechLang == "en":
+                result = nt.translateForMe("en", "th", speechtext)
+                tts = gTTS(result, lang='th', slow=False)
             tts.save("testTran.mp3")
             play("testTran.mp3")
             delete("testTran.mp3")
             lblTran.text = result
+        
         # with open('showthisone.txt', 'r' , encoding='utf-8') as myfile:
         #     data = myfile.read().replace('\n', '')
         #     l2.text = data
@@ -95,50 +107,74 @@ class MyW(Widget):
 class ExampleApp(BoxLayout,App):
     kv_directory = "kvTemp"
     isShownMenu = True
+    speakLang = ""
+    toLang = ""
     def b_smash(self):
         self.ids.b1.text = 'Pudding'
 
     def process_button_click(self):
         # Open the pop up
-        play("start.mp3")
+        #play("start.mp3")
         self.show_popup()
         mythread = threading.Thread(target=self.something_that_takes_5_seconds_to_run)
         mythread.start()
-        #play("end.mp3")
+        #verygood = ns.Test_Drive.test()
+        # verygood = ns.Test_Drive.listen()
+        # print(verygood)
+        # print("asd")
+        # MyW.Label_Change(self,verygood)
+        # print("asd2")
+        # self.pop_up.dismiss()
+
 
     def process_button_th(self):
         self.initiate_speech_recog("th")
+        toLang = 'en'
 
     def process_button_en(self):
         self.initiate_speech_recog("en")
+        toLang = 'th'
 
     def initiate_speech_recog(self, lang):
+        self.speakLang = lang
         btnTH.opacity = 0
         btnTH.disabled = True
         btnEN.opacity = 0
         btnEN.disabled = True
         if (lang == "th"):
             lblWelcome.text = "ยินดีต้อนรับ"
+            play('speakTH.mp3')
         if (lang == "en"):
             lblWelcome.text = "Welcome"
+            play('speakEN.mp3')
         lblSpeak.opacity = 1
         lblTran.opacity = 1
         lblWelcome.opacity = 1
         btnListen.opacity = 1
+        time.sleep(2)
         btnListen.disabled = False
         pass
 
     def something_that_takes_5_seconds_to_run(self):
-        thistime = time.time() 
-        while thistime + 5 > time.time(): # 5 seconds
-            time.sleep(1)
-        verygood = ns.Test_Drive.test()
-        #ns.Test_Drive.listen()
+        # thistime = time.time() 
+        # while thistime + 5 > time.time(): # 5 seconds
+        #     time.sleep(1)
+        # verygood = ns.Test_Drive.test()
+        # #verygood = ns.Test_Drive.listen()
+        # print(verygood)
+        # print("asd")
+        # MyW.Label_Change(self,verygood)
+        # self.pop_up.dismiss()
+        # play("end.mp3")
+        if self.speakLang == "th":
+            verygood = ns.Test_Drive.listen()
+        else:
+            verygood = ns.Test_Drive.listenEN()
         print(verygood)
         print("asd")
-        MyW.Label_Change(self,verygood)
+        MyW.Label_Change(self,verygood,self.speakLang)
+        print("asd2")
         self.pop_up.dismiss()
-        play("end.mp3")
     
     def show_popup(self):
         self.pop_up = Factory.PopupBox()

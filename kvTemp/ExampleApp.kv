@@ -24,19 +24,19 @@
         font_name: "C:\Windows\Fonts\Tahoma.ttf"
         id: lblWelcome
         text: 'Welcome text'
-        pos: ((root.width - 100)/2,root.height/2)
+        pos: ((root.width - 100)/2,root.height-100)
         opacity: 0
            
     Label:
         font_name: "C:\Windows\Fonts\Tahoma.ttf"
         id: lblTran
         text: 'translate text'
-        pos: ((root.width - 100)/2,root.height/2+100)
+        pos: ((root.width - 250),root.height/2+100)
         opacity: 0
     Label:
         font_name: "C:\Windows\Fonts\Tahoma.ttf"
         id: lblSpeak
-        text: 'speak text' + root.text
+        text: 'speak text'
         pos: ((root.width - 500)/2,root.height/2+100)
         opacity: 0
     Button:
@@ -90,11 +90,11 @@
         pos: root.width/2 -50,root.height/2 + 200
         opacity: 0
 
-    Label:
-        size_hint_y: None
-        height: self.texture_size[1]
-        text_size: self.width, None
-        text: root.text     
+    # Label:
+    #     size_hint_y: None
+    #     height: self.texture_size[1]
+    #     text_size: self.width, None
+    #     text: root.text     
 <CustomDropDown>:
     Button:
         text: 'My first Item'

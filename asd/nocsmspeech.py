@@ -17,7 +17,8 @@ class Test_Drive:
 
     def listen():
         r = sr.Recognizer()
-        playsound("waiting.mp3")
+        r.energy_threshold = 3000
+        playsound("start.mp3")
         print("Say something!")
         start = time.time()
         with sr.Microphone() as source:
