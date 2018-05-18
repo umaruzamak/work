@@ -5,71 +5,76 @@
 import speech_recognition as sr
 from gtts import gTTS
 from playsound import playsound
-import time, threading, os, _thread
+import time
+import threading
+import os
 from pygame import mixer
+from stopit import async_raise, TimeoutException
+# doctest: +SKIP
+from stopit import ThreadingTimeout as Timeout, threading_timeoutable as timeoutable
 #import keyboard
 # obtain audio from the microphone
+
 
 def play(text):
     mixer.init()
     mixer.music.load(text)
     mixer.music.play()
+
+
 def delete(text):
     time.sleep(2)
     mixer.music.load("Holder.mp3")
-    #os.remove(text)
-def watchdog_timer(state):
-    time.sleep(15)
-    if not state['completed']:
-        _thread.interrupt_main()
-        print("kakaka")
+    # os.remove(text)
 # def startloop():
 #     mythread = threading.Thread(target=self.listen)
 #     mythread.start()
-#     thistime = time.time() 
+#     thistime = time.time()
 #     while thistime + 20 > time.time(): # 5 seconds
 #         time.sleep(1)
-    
+
+
 def listen():
 
-    play("start.mp3")
-    delete("start.mp3")
-    r = sr.Recognizer()
-    print("Say something!")
-    start = time.time()
-    state = {'completed': False}
-    watchdog = threading.Thread(target=watchdog_timer, args=(state,))
-    watchdog.daemon = True
-    watchdog.start()
-    with sr.Microphone() as source:
-        print(time.time()-start)
-        audio = r.listen(source)
-        print(time.time()-start)
-
     try:
-        soundfile = "temp.mp3"
-        print(time.time()-start)
-        print("listen")
-        #play("end.mp3")
-        #delete("end.mp3")
-        text = r.recognize_google(audio, language="th-TH")
-        print(time.time()-start)
-        print("get it")
-        # tts = gTTS(text, lang='th', slow=False)
-        
-        print("Google Speech Recognition thinks you said " +
-                text)
-        # playsound(soundfile)
-        state['completed'] = True
-        return text
-    except sr.UnknownValueError:
-        print("Google Speech Recognition could not understand audio")
-        return "error1239123"
-    except sr.RequestError as e:
-        print(
-            "Could not request results from Google Speech Recognition service; {0}".format(e))
-    except sr.WaitTimeoutError:
-        print("waiting too long")
+        with Timeout(30.0, swallow_exc=False) as timeout_ctx:
+            # play("start.mp3")
+            # delete("start.mp3")
+            r = sr.Recognizer()
+            print("Say something!")
+            start = time.time()
+            with sr.Microphone() as source:
+                print(time.time()-start)
+                audio = r.listen(source)
+                print(time.time()-start)
+
+            try:
+                soundfile = "temp.mp3"
+                print(time.time()-start)
+                print("listen")
+                # play("end.mp3")
+                # delete("end.mp3")
+                text = r.recognize_google(audio, language="th-TH")
+                print(time.time()-start)
+                print("get it")
+                # tts = gTTS(text, lang='th', slow=False)
+
+                print("Google Speech Recognition thinks you said " +
+                      text)
+                # playsound(soundfile)
+                return text
+            except sr.UnknownValueError:
+                print("Google Speech Recognition could not understand audio")
+                return "error1239123"
+            except sr.RequestError as e:
+                print(
+                    "Could not request results from Google Speech Recognition service; {0}".format(e))
+            except sr.WaitTimeoutError:
+                print("waiting too long")
+    except TimeoutException:
+        print("too slow")
+        return "too slow"
+
 
 class Test_Drive:
     def test():
@@ -91,13 +96,13 @@ class Test_Drive:
             soundfile = "temp.mp3"
             print(time.time()-start)
             print("listen")
-            #play("end.mp3")
-            #delete("end.mp3")
+            # play("end.mp3")
+            # delete("end.mp3")
             text = r.recognize_google(audio, language="th-TH")
             print(time.time()-start)
             print("get it")
             # tts = gTTS(text, lang='th', slow=False)
-            
+
             print("Google Speech Recognition thinks you said " +
                   text)
             # playsound(soundfile)
@@ -155,6 +160,7 @@ class Test_Drive:
                 "Could not request results from Google Speech Recognition service; {0}".format(e))
         except sr.WaitTimeoutError:
             print("waiting too long")
+
 
 listen()
 # print(Test_Drive.listen())

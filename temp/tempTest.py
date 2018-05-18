@@ -13,7 +13,7 @@ from kivy.uix.boxlayout import BoxLayout
 
 from pygame import mixer
 from gtts import gTTS
-import nocsmspeech as ns
+import testnoc as ns
 import nocsmtranslator as nt
 import time, threading, os
 
