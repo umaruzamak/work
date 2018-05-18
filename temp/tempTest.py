@@ -73,7 +73,7 @@ class MyW(Widget):
                 tts = gTTS(result, lang='th', slow=False)
             tts.save("testTran.mp3")
             play("testTran.mp3")
-            delete("testTran.mp3")
+            #delete("testTran.mp3")
             lblTran.text = result
         
         # with open('showthisone.txt', 'r' , encoding='utf-8') as myfile:
@@ -170,11 +170,20 @@ class ExampleApp(BoxLayout,App):
             verygood = ns.Test_Drive.listen()
         else:
             verygood = ns.Test_Drive.listenEN()
-        print(verygood)
-        print("asd")
-        MyW.Label_Change(self,verygood,self.speakLang)
-        print("asd2")
+        if verygood != "error1239123":
+            print(verygood)
+            print("asd")
+            MyW.Label_Change(self,verygood,self.speakLang)
+            print("asd2")
+        else:
+            if self.speakLang == 'th':
+                errorsound = "errorTH.mp3"
+            if self.speakLang == 'en':
+                errorsound = "errorEN.mp3"
+            play(errorsound)
+            print("error")
         self.pop_up.dismiss()
+        
     
     def show_popup(self):
         self.pop_up = Factory.PopupBox()
@@ -187,4 +196,7 @@ class ExampleApp(BoxLayout,App):
         # return self
         return MyW()
 if __name__ == "__main__":
-    ExampleApp().run()
+    try:
+        ExampleApp().run()
+    except KeyboardInterrupt:
+        print("interrupt")
