@@ -1,0 +1,36 @@
+#:kivy 1.10
+<MyW>:
+Button:
+    id: tlbl
+    height: 40
+    width: 100
+    size_hint: .5, .5
+    text: 'Click Me'
+    on_press: root.process_button_click()
+           
+    
+<PopupBox>:
+    pop_up_text: _pop_up_text
+    size_hint: .5, .5
+    auto_dismiss: True
+    title: 'Status'
+
+    BoxLayout:
+        orientation: "vertical"
+        AsyncImage:
+            source: '.\spinner.gif'
+            anim_delay: 0.05
+        Label:
+            id: _pop_up_text
+            text: 'asdasd'
+        Label:
+            id: lbl
+            text: 's'
+
+
+
+
+    
+        
+
+    

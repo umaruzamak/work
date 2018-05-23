@@ -1,0 +1,146 @@
+#:kivy 1.10
+
+<PopupBox>:
+    pop_up_text: _pop_up_text
+    size_hint: .5, .5
+    auto_dismiss: False
+    title: 'Status'
+
+    BoxLayout:
+        orientation: "vertical"
+        AsyncImage:
+            source: '.\spinner.gif'
+            anim_delay: 0.05
+        Label:
+            id: _pop_up_text
+            text: 'asdasd'
+        Label:
+            id: lbl
+            text: 'aasdasdads'
+
+<MyW>:
+    size: 600,600
+    Label:
+        font_name: "C:\Windows\Fonts\Tahoma.ttf"
+        id: lblWelcome
+        text: 'Welcome text'
+        pos: ((root.width - 100)/2,root.height-100)
+        opacity: 0
+           
+    Label:
+        font_name: "C:\Windows\Fonts\Tahoma.ttf"
+        id: lblTran
+        text: 'translate text'
+        pos: ((root.width - 250),root.height/2+100)
+        opacity: 0
+    Label:
+        font_name: "C:\Windows\Fonts\Tahoma.ttf"
+        id: lblSpeak
+        text: 'speak text'
+        pos: ((root.width - 500)/2,root.height/2+100)
+        opacity: 0
+    Button:
+        id: btnListen
+        height: 80
+        width: 80
+        size_hint: .5, .5
+        background_color: 255,255,255,1
+        text: ''
+        on_press: app.process_button_click()
+        pos: (root.width - self.width)/2,root.height/2 -50
+        opacity: 0
+        disabled: True
+        Image:
+            source: 'mic2.png'
+            center_x: self.parent.center_x
+            center_y: self.parent.center_y + 10 
+            height: 80
+            width: 80
+            allow_stretch: True
+    Button:
+        id: btnTH
+        pos: 50,400
+        size: 160,80
+        on_press: app.process_button_th()
+        Image:
+            source: 'flagTH.png'
+            center_x: self.parent.center_x - 30
+            center_y: self.parent.center_y + 10 
+            height: 80
+            width: 160
+            allow_stretch: True
+    
+    Button:
+        id: btnEN
+        pos: 50,240
+        size: 160,80
+        on_press: app.process_button_en()
+        Image:
+            source: 'flagEN.png'
+            center_x: self.parent.center_x - 30
+            center_y: self.parent.center_y + 10
+            size: 160,80
+            allow_stretch: True
+    Button:
+        id: btnBack
+        text: "Back"
+        pos: (root.width - self.width)/2 , 0
+        opacity: 0
+        disabled: True
+        on_press: app.restore_main_menu()
+    TextInput:
+        font_name: "C:\Windows\Fonts\Tahoma.ttf"
+        id: txb1
+        height: 40
+        width: 100
+        pos: root.width/2 -50,root.height/2 + 200
+        opacity: 0
+
+    # Label:
+    #     size_hint_y: None
+    #     height: self.texture_size[1]
+    #     text_size: self.width, None
+    #     text: root.text     
+<CustomDropDown>:
+    Button:
+        text: 'My first Item'
+        size_hint_y: None
+        height: 44
+        on_release: root.select('item1')
+    Label:
+        text: 'Unselectable item'
+        size_hint_y: None
+        height: 44
+    Button:
+        text: 'My second Item'
+        size_hint_y: None
+        height: 44
+        on_release: root.select('item2')
+    
+# AnchorLayout:
+    
+#     anchor_x: 'center'
+#     anchor_y: 'center'
+#     Button:
+#         height: 40
+#         width: 100
+#         size_hint: (None, None)
+#         text: 'Click Me'
+#         on_press: app.process_button_click()
+#     Label:
+#         anchor_x: 'left'
+#         id: l1
+#         text: 'Press to smash'
+#         pos: ((root.width - 100)/2,root.height/2-100)
+FloatLayout:
+    Button:
+        height: 40
+        width: 100
+        size_hint: (None, None)
+        text: 'Click Me'
+        on_press: app.process_button_click()
+    Label:
+        anchor_x: 'left'
+        id: l1
+        text: 'Press to smash'
+        pos: ((root.width - 100)/2,root.height/2-100)
